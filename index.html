@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Loan Calculator — Monthly Payment, Interest & Total Cost</title>
+<meta name="description" content="Free car loan calculator. Enter vehicle price, down payment, trade-in, tax and APR to see your exact monthly payment, total interest and true cost. No sign-up.">
+<link rel="canonical" href="https://car-loan-calculator.pages.dev/">
+<meta property="og:title" content="Car Loan Calculator — Monthly Payment, Interest & Total Cost">
+<meta property="og:description" content="Calculate your exact car loan monthly payment including tax, trade-in, and fees. Free and instant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://car-loan-calculator.pages.dev/">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6626869606288906" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Car Loan Calculator",
+  "description": "Calculate monthly car loan payment including tax, down payment and trade-in value",
+  "url": "https://car-loan-calculator.pages.dev/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a good interest rate for a car loan in 2025?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In 2025, good auto loan rates range from 5–7% APR for new cars with excellent credit (750+). Used car rates run 1–3% higher. Rates above 14% are considered high — if your rate is over 15%, consider improving your credit score or making a larger down payment before buying."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much should I put down on a car?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Financial experts recommend at least 20% down on a new car and 10% on a used car. A larger down payment reduces your monthly payment, lowers total interest paid, and prevents being 'underwater' (owing more than the car is worth). If you can't afford 20%, consider a cheaper vehicle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I choose a shorter or longer loan term?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Shorter terms (36–48 months) cost less in total interest but have higher monthly payments. Longer terms (72–84 months) reduce your monthly payment but you'll pay thousands more in interest and risk negative equity since cars depreciate faster than you pay down the loan. Avoid 84-month loans unless absolutely necessary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does sales tax apply to the trade-in credit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In most U.S. states, sales tax is calculated on the purchase price minus the trade-in value. For example, if you buy a $35,000 car and trade in a vehicle worth $10,000, tax is calculated on $25,000. Some states (e.g., California, Hawaii) tax the full purchase price regardless of trade-in. Always check your state's rules."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it better to finance through the dealer or my bank?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Banks and credit unions typically offer lower rates than dealer financing (which includes a markup). However, dealers occasionally offer manufacturer-sponsored 0% APR promotions that beat any bank rate. Best strategy: get pre-approved by your bank first, then compare with the dealer's offer — and negotiate on price separate from financing."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#0f172a;line-height:1.6}
+  header{background:linear-gradient(135deg,#0f4c81,#1d6fb8);color:#fff;padding:28px 20px 24px;text-align:center}
+  header h1{font-size:clamp(22px,4vw,32px);font-weight:700;letter-spacing:-.5px}
+  header p{margin-top:6px;opacity:.85;font-size:15px}
+  .container{max-width:840px;margin:0 auto;padding:0 16px 60px}
+  .ad-slot{background:#f1f5f9;border:1px dashed #cbd5e1;border-radius:8px;padding:12px;text-align:center;margin:20px 0;color:#94a3b8;font-size:12px;min-height:90px;display:flex;align-items:center;justify-content:center}
+  .card{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:28px;margin-top:24px}
+  .card h2{font-size:18px;font-weight:700;color:#1e293b;margin-bottom:20px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  @media(max-width:580px){.grid-2,.grid-3{grid-template-columns:1fr}}
+  label{display:block;font-size:13px;font-weight:600;color:#475569;margin-bottom:6px}
+  .input-wrap{position:relative}
+  .prefix,.suffix{position:absolute;top:50%;transform:translateY(-50%);font-size:15px;color:#64748b;font-weight:600;pointer-events:none}
+  .prefix{left:12px}
+  .suffix{right:12px}
+  input[type=number],select{width:100%;border:1.5px solid #e2e8f0;border-radius:8px;background:#f8fafc;color:#0f172a;font-size:16px;padding:10px 12px;outline:none;transition:border-color .2s}
+  input[type=number]:focus,select:focus{border-color:#1d6fb8;background:#fff}
+  input.has-prefix{padding-left:28px}
+  input.has-suffix{padding-right:36px}
+  .field{margin-bottom:0}
+  .dp-toggle{display:flex;gap:0;margin-bottom:6px;border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden;width:fit-content}
+  .dp-btn{padding:4px 14px;font-size:13px;font-weight:600;color:#64748b;background:#f8fafc;border:none;cursor:pointer;transition:all .15s}
+  .dp-btn.active{background:#1d6fb8;color:#fff}
+  .term-toggle{display:flex;flex-wrap:wrap;gap:8px;margin-top:0}
+  .term-btn{padding:8px 14px;border:1.5px solid #e2e8f0;border-radius:6px;background:#f8fafc;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;transition:all .2s}
+  .term-btn.active{border-color:#1d6fb8;background:#eff6ff;color:#1d6fb8}
+  .calc-btn{width:100%;margin-top:20px;padding:14px;background:linear-gradient(135deg,#0f4c81,#1d6fb8);color:#fff;border:none;border-radius:10px;font-size:17px;font-weight:700;cursor:pointer;transition:opacity .2s}
+  .calc-btn:hover{opacity:.92}
+  #results{display:none}
+  .result-hero{text-align:center;padding:20px 0 16px}
+  .result-hero .label{font-size:14px;color:#64748b;font-weight:600}
+  .result-hero .amount{font-size:clamp(38px,7vw,54px);font-weight:800;color:#0f4c81;line-height:1.1}
+  .result-hero .sub{font-size:13px;color:#94a3b8;margin-top:4px}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  @media(max-width:480px){.stats-grid{grid-template-columns:1fr 1fr}}
+  .stat{background:#f8fafc;border-radius:10px;padding:14px 12px;text-align:center}
+  .stat .s-label{font-size:11px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .stat .s-val{font-size:19px;font-weight:800;color:#0f172a;margin-top:4px}
+  .stat .s-val.red{color:#dc2626}
+  .stat .s-val.green{color:#16a34a}
+  .breakdown{margin-top:20px;background:#f8fafc;border-radius:10px;padding:16px}
+  .breakdown h3{font-size:14px;font-weight:700;color:#475569;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+  .brow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;font-size:14px;color:#334155}
+  .brow:last-child{border-bottom:none;font-weight:700;font-size:15px;color:#0f172a;padding-top:10px}
+  .bar-section{margin-top:20px}
+  .bar-label-row{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px}
+  .bar-track{height:22px;background:#f1f5f9;border-radius:11px;overflow:hidden;display:flex}
+  .bar-principal{height:100%;background:#1d6fb8;transition:width .5s}
+  .bar-interest{height:100%;background:#f97316;transition:width .5s}
+  .bar-legend{display:flex;gap:16px;margin-top:6px;font-size:12px;color:#64748b}
+  .bar-legend span{display:flex;align-items:center;gap:5px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .dot.blue{background:#1d6fb8}
+  .dot.orange{background:#f97316}
+  .compare-section{margin-top:20px}
+  .compare-section h3{font-size:15px;font-weight:700;color:#1e293b;margin-bottom:12px}
+  .compare-table{width:100%;border-collapse:collapse;font-size:14px}
+  .compare-table th{background:#f1f5f9;padding:10px 12px;text-align:left;font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px}
+  .compare-table td{padding:10px 12px;border-bottom:1px solid #f1f5f9;color:#334155}
+  .compare-table tr.highlight td{background:#eff6ff;font-weight:700;color:#0f4c81}
+  .warn-row{background:#fef9c3!important}
+  .warn-row td{color:#92400e!important}
+  .rate-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}
+  .rate-table th{background:#f1f5f9;padding:10px;text-align:left;font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase}
+  .rate-table td{padding:10px;border-bottom:1px solid #f1f5f9;color:#334155}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+  .badge.good{background:#dcfce7;color:#16a34a}
+  .badge.avg{background:#fef9c3;color:#a16207}
+  .badge.poor{background:#fee2e2;color:#dc2626}
+  .faq-section h2{font-size:20px;font-weight:700;margin-bottom:16px}
+  details{border-bottom:1px solid #f1f5f9;padding:14px 0}
+  summary{font-size:15px;font-weight:600;cursor:pointer;color:#1e293b;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';font-size:20px;color:#1d6fb8;font-weight:400}
+  details[open] summary::after{content:'−'}
+  details p{margin-top:10px;color:#475569;font-size:14px;line-height:1.7}
+  footer{text-align:center;color:#94a3b8;font-size:12px;padding:20px;border-top:1px solid #e2e8f0;margin-top:40px}
+  footer a{color:#64748b}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚗 Car Loan Calculator</h1>
+  <p>Monthly payment · Total interest · True cost with tax & trade-in</p>
+</header>
+
+<div class="container">
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6626869606288906" data-ad-slot="1111222233" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Calculator -->
+  <div class="card">
+    <h2>🚘 Vehicle & Loan Details</h2>
+
+    <div class="grid-2" style="margin-bottom:16px">
+      <div class="field">
+        <label for="price">Vehicle Price</label>
+        <div class="input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="price" class="has-prefix" value="35000" min="1000" max="500000" step="500">
+        </div>
+      </div>
+      <div class="field">
+        <label for="trade">Trade-In Value</label>
+        <div class="input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="trade" class="has-prefix" value="0" min="0" max="200000" step="500">
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px">
+      <div class="field">
+        <label>Down Payment</label>
+        <div class="dp-toggle">
+          <button class="dp-btn active" id="dp-dollar-btn" onclick="setDpMode('dollar')">$</button>
+          <button class="dp-btn" id="dp-pct-btn" onclick="setDpMode('pct')">%</button>
+        </div>
+        <div class="input-wrap" id="dp-dollar-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="dp-dollar" class="has-prefix" value="7000" min="0" step="500">
+        </div>
+        <div class="input-wrap" id="dp-pct-wrap" style="display:none">
+          <input type="number" id="dp-pct" class="has-suffix" value="20" min="0" max="100" step="1">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="tax">Sales Tax Rate</label>
+        <div class="input-wrap">
+          <input type="number" id="tax" class="has-suffix" value="6.5" min="0" max="15" step="0.1">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px">
+      <div class="field">
+        <label for="rate">Interest Rate (APR)</label>
+        <div class="input-wrap">
+          <input type="number" id="rate" class="has-suffix" value="7.5" min="0" max="36" step="0.1">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fees">Other Fees (doc, title, etc.)</label>
+        <div class="input-wrap">
+          <span class="prefix">$</span>
+          <input type="number" id="fees" class="has-prefix" value="500" min="0" max="5000" step="50">
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:4px">
+      <label>Loan Term</label>
+      <div class="term-toggle">
+        <button class="term-btn" data-months="24">24 mo</button>
+        <button class="term-btn" data-months="36">36 mo</button>
+        <button class="term-btn active" data-months="48">48 mo</button>
+        <button class="term-btn" data-months="60">60 mo</button>
+        <button class="term-btn" data-months="72">72 mo</button>
+        <button class="term-btn" data-months="84">84 mo ⚠️</button>
+      </div>
+      <input type="hidden" id="term" value="48">
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">Calculate My Car Payment →</button>
+  </div>
+
+  <!-- Results -->
+  <div class="card" id="results">
+    <div class="result-hero">
+      <div class="label">Monthly Payment</div>
+      <div class="amount" id="monthly-payment">$0</div>
+      <div class="sub" id="payoff-date"></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="s-label">Amount Financed</div>
+        <div class="s-val" id="stat-financed">$0</div>
+      </div>
+      <div class="stat">
+        <div class="s-label">Total Interest</div>
+        <div class="s-val red" id="stat-interest">$0</div>
+      </div>
+      <div class="stat">
+        <div class="s-label">Total Cost</div>
+        <div class="s-val" id="stat-total">$0</div>
+      </div>
+      <div class="stat">
+        <div class="s-label">Tax Paid</div>
+        <div class="s-val" id="stat-tax">$0</div>
+      </div>
+      <div class="stat">
+        <div class="s-label">Down Payment</div>
+        <div class="s-val green" id="stat-dp">$0</div>
+      </div>
+      <div class="stat">
+        <div class="s-label">Interest %</div>
+        <div class="s-val" id="stat-pct">0%</div>
+      </div>
+    </div>
+
+    <!-- Financing breakdown -->
+    <div class="breakdown" style="margin-top:16px">
+      <h3>💰 Financing Breakdown</h3>
+      <div class="brow"><span>Vehicle price</span><span id="b-price">$0</span></div>
+      <div class="brow"><span>Sales tax</span><span id="b-tax">$0</span></div>
+      <div class="brow"><span>Fees</span><span id="b-fees">$0</span></div>
+      <div class="brow"><span>Trade-in credit</span><span id="b-trade" style="color:#16a34a">−$0</span></div>
+      <div class="brow"><span>Down payment</span><span id="b-dp" style="color:#16a34a">−$0</span></div>
+      <div class="brow"><span>Amount financed</span><span id="b-financed">$0</span></div>
+    </div>
+
+    <!-- Bar -->
+    <div class="bar-section">
+      <div class="bar-label-row">
+        <span>Principal vs Interest</span>
+        <span id="bar-ratio"></span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-principal" id="bar-p" style="width:70%"></div>
+        <div class="bar-interest" id="bar-i" style="width:30%"></div>
+      </div>
+      <div class="bar-legend">
+        <span><span class="dot blue"></span> Principal</span>
+        <span><span class="dot orange"></span> Interest</span>
+      </div>
+    </div>
+
+    <!-- Term comparison -->
+    <div class="compare-section">
+      <h3>📊 Compare Loan Terms</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Term</th><th>Monthly</th><th>Total Interest</th><th>Total Cost</th><th>Note</th></tr>
+        </thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6626869606288906" data-ad-slot="2222333344" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Rate reference -->
+  <div class="card">
+    <h2>📈 2025 Auto Loan Rate Reference</h2>
+    <table class="rate-table">
+      <thead><tr><th>Credit Score</th><th>Range</th><th>New Car APR</th><th>Used Car APR</th><th>Rating</th></tr></thead>
+      <tbody>
+        <tr><td>Exceptional</td><td>780+</td><td>5.0% – 6.5%</td><td>6.5% – 8.5%</td><td><span class="badge good">Excellent</span></td></tr>
+        <tr><td>Very Good</td><td>720–779</td><td>6.5% – 8.5%</td><td>8.5% – 11%</td><td><span class="badge good">Good</span></td></tr>
+        <tr><td>Good</td><td>660–719</td><td>8.5% – 12%</td><td>11% – 15%</td><td><span class="badge avg">Average</span></td></tr>
+        <tr><td>Fair</td><td>600–659</td><td>12% – 18%</td><td>15% – 22%</td><td><span class="badge poor">High</span></td></tr>
+        <tr><td>Poor</td><td>Below 600</td><td>18% – 25%+</td><td>22% – 29%+</td><td><span class="badge poor">Very High</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#94a3b8;margin-top:10px">Source: Experian State of the Automotive Finance Market Q1 2025. Rates vary by lender and state.</p>
+  </div>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6626869606288906" data-ad-slot="3333444455" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- FAQ -->
+  <div class="card faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <details open>
+      <summary>What is a good interest rate for a car loan in 2025?</summary>
+      <p>In 2025, good auto loan rates range from 5–7% APR for new cars with excellent credit (750+). Used car rates run 1–3% higher. Rates above 14% are considered high — if your rate is over 15%, consider improving your credit score or making a larger down payment before buying.</p>
+    </details>
+    <details>
+      <summary>How much should I put down on a car?</summary>
+      <p>Financial experts recommend at least 20% down on a new car and 10% on a used car. A larger down payment reduces your monthly payment, lowers total interest paid, and prevents being 'underwater' (owing more than the car is worth). If you can't afford 20%, consider a cheaper vehicle.</p>
+    </details>
+    <details>
+      <summary>Should I choose a shorter or longer loan term?</summary>
+      <p>Shorter terms (36–48 months) cost less in total interest but have higher monthly payments. Longer terms (72–84 months) reduce your monthly payment but you'll pay thousands more in interest and risk negative equity since cars depreciate faster than you pay down the loan. Avoid 84-month loans unless absolutely necessary.</p>
+    </details>
+    <details>
+      <summary>Does sales tax apply to the trade-in credit?</summary>
+      <p>In most U.S. states, sales tax is calculated on the purchase price minus the trade-in value. For example, if you buy a $35,000 car and trade in a vehicle worth $10,000, tax is calculated on $25,000. Some states (e.g., California, Hawaii) tax the full purchase price regardless of trade-in. Always check your state's rules.</p>
+    </details>
+    <details>
+      <summary>Is it better to finance through the dealer or my bank?</summary>
+      <p>Banks and credit unions typically offer lower rates than dealer financing (which includes a markup). However, dealers occasionally offer manufacturer-sponsored 0% APR promotions that beat any bank rate. Best strategy: get pre-approved by your bank first, then compare with the dealer's offer — and negotiate on price separate from financing.</p>
+    </details>
+  </div>
+
+  <div class="ad-slot">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6626869606288906" data-ad-slot="4444555566" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+</div>
+
+<footer>
+  <p>CarLoanCalc · All calculations are estimates for informational purposes only. Not financial advice.</p>
+  <p style="margin-top:6px"><a href="/privacy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+const fmt = n => '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+let dpMode = 'dollar';
+
+function setDpMode(m) {
+  dpMode = m;
+  document.getElementById('dp-dollar-btn').classList.toggle('active', m === 'dollar');
+  document.getElementById('dp-pct-btn').classList.toggle('active', m === 'pct');
+  document.getElementById('dp-dollar-wrap').style.display = m === 'dollar' ? '' : 'none';
+  document.getElementById('dp-pct-wrap').style.display = m === 'pct' ? '' : 'none';
+}
+
+document.querySelectorAll('.term-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('term').value = this.dataset.months;
+  });
+});
+
+function calcPayment(P, annualRate, months) {
+  const r = annualRate / 100 / 12;
+  if (r === 0) return P / months;
+  return P * (r * Math.pow(1+r, months)) / (Math.pow(1+r, months) - 1);
+}
+
+function calculate() {
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const trade = parseFloat(document.getElementById('trade').value) || 0;
+  const taxRate = parseFloat(document.getElementById('tax').value) || 0;
+  const annualRate = parseFloat(document.getElementById('rate').value) || 0;
+  const fees = parseFloat(document.getElementById('fees').value) || 0;
+  const months = parseInt(document.getElementById('term').value) || 48;
+
+  let dp;
+  if (dpMode === 'dollar') {
+    dp = parseFloat(document.getElementById('dp-dollar').value) || 0;
+  } else {
+    const pct = parseFloat(document.getElementById('dp-pct').value) || 0;
+    dp = price * pct / 100;
+  }
+
+  // Tax on (price - trade) in most states
+  const taxBase = Math.max(0, price - trade);
+  const taxAmount = taxBase * taxRate / 100;
+  const financed = price + taxAmount + fees - trade - dp;
+
+  if (financed <= 0 || price <= 0) return;
+
+  const monthly = calcPayment(financed, annualRate, months);
+  const totalPaid = monthly * months;
+  const totalInterest = totalPaid - financed;
+  const totalCost = price + taxAmount + fees + totalInterest;
+  const interestPct = (totalInterest / totalPaid) * 100;
+  const principalPct = 100 - interestPct;
+
+  const now = new Date();
+  const payoff = new Date(now.getFullYear(), now.getMonth() + months, 1);
+  const payoffStr = payoff.toLocaleDateString('en-US', {month:'long', year:'numeric'});
+
+  document.getElementById('monthly-payment').textContent = fmt(monthly);
+  document.getElementById('payoff-date').textContent = months + ' payments · Payoff: ' + payoffStr;
+  document.getElementById('stat-financed').textContent = fmt(financed);
+  document.getElementById('stat-interest').textContent = fmt(totalInterest);
+  document.getElementById('stat-total').textContent = fmt(totalCost);
+  document.getElementById('stat-tax').textContent = fmt(taxAmount);
+  document.getElementById('stat-dp').textContent = fmt(dp);
+  document.getElementById('stat-pct').textContent = interestPct.toFixed(1) + '%';
+
+  document.getElementById('b-price').textContent = fmt(price);
+  document.getElementById('b-tax').textContent = fmt(taxAmount);
+  document.getElementById('b-fees').textContent = fmt(fees);
+  document.getElementById('b-trade').textContent = '−' + fmt(trade);
+  document.getElementById('b-dp').textContent = '−' + fmt(dp);
+  document.getElementById('b-financed').textContent = fmt(financed);
+
+  document.getElementById('bar-p').style.width = principalPct.toFixed(1) + '%';
+  document.getElementById('bar-i').style.width = interestPct.toFixed(1) + '%';
+  document.getElementById('bar-ratio').textContent = principalPct.toFixed(0) + '% / ' + interestPct.toFixed(0) + '%';
+
+  // Comparison table
+  const terms = [24, 36, 48, 60, 72, 84];
+  const tbody = document.getElementById('compare-body');
+  tbody.innerHTML = '';
+  terms.forEach(t => {
+    const m = calcPayment(financed, annualRate, t);
+    const ti = m * t - financed;
+    const tc = price + taxAmount + fees + ti;
+    const tr = document.createElement('tr');
+    if (t === months) tr.className = 'highlight';
+    if (t >= 72) tr.className += ' warn-row';
+    const label = t + ' mo';
+    const note = t <= 36 ? '✓ Best value' : t <= 48 ? 'Balanced' : t <= 60 ? 'Common' : t === 72 ? '⚠ Long' : '⚠ Very long';
+    tr.innerHTML = `<td>${label}</td><td>${fmt(m)}</td><td>${fmt(ti)}</td><td>${fmt(tc)}</td><td style="font-size:12px">${note}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+window.addEventListener('DOMContentLoaded', calculate);
+</script>
+</body>
+</html>
