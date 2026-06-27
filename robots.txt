@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://car-loan-calculator.pages.dev/sitemap.xml
+Sitemap: https://car-loan-calculator-6jt.pages.dev/sitemap.xml
